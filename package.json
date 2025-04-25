@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@storefront-ui/react": "^2.7.1",
+    "axios": "^1.9.0",
     "next": "15.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -5,14 +5,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@storefront-ui/react"],
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "storage.googleapis.com",
-        port: "",
-        pathname: "/sfui_docs_artifacts_bucket_public/**",
-      },
-    ],
+    remotePatterns: [new URL("https://fakestoreapi.com/img/**")],
   },
 };
 

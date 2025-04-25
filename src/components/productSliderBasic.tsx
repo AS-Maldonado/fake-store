@@ -1,3 +1,4 @@
+import { Product } from "@/types/Product";
 import {
   SfLink,
   SfButton,
@@ -9,15 +10,9 @@ import {
 import classNames from "classnames";
 import Image from "next/image";
 
-const products = Array.from(Array(10), (_, i) => ({
-  id: i.toString(),
-  name: "Athletic mens walking sneakers",
-  price: "$2,345.99",
-  img: {
-    src: "https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/sneakers.png",
-    alt: "White sneaker shoe",
-  },
-}));
+interface ProducSliderBasicProps {
+  products: Product[];
+}
 
 function ButtonPrev({ disabled, ...attributes }: { disabled?: boolean }) {
   return (
@@ -38,8 +33,6 @@ function ButtonPrev({ disabled, ...attributes }: { disabled?: boolean }) {
   );
 }
 
-ButtonPrev.defaultProps = { disabled: false };
-
 function ButtonNext({ disabled, ...attributes }: { disabled?: boolean }) {
   return (
     <SfButton
@@ -59,9 +52,9 @@ function ButtonNext({ disabled, ...attributes }: { disabled?: boolean }) {
   );
 }
 
-ButtonNext.defaultProps = { disabled: false };
-
-export default function ProductSliderBasic() {
+export default function ProductSliderBasic({
+  products,
+}: ProducSliderBasicProps) {
   return (
     <SfScrollable
       className="m-auto py-4 items-center w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
@@ -70,16 +63,16 @@ export default function ProductSliderBasic() {
       slotPreviousButton={<ButtonPrev />}
       slotNextButton={<ButtonNext />}
     >
-      {products.map(({ id, name, price, img }) => (
+      {products.map((product) => (
         <div
-          key={id}
-          className="first:ms-auto last:me-auto ring-1 ring-inset ring-neutral-200 shrink-0 rounded-md hover:shadow-lg w-[148px] lg:w-[192px]"
+          key={product.id}
+          className="last:me-auto ring-1 ring-inset ring-neutral-200 shrink-0 rounded-md hover:shadow-lg w-[148px] lg:w-[192px]"
         >
           <div className="relative">
             <SfLink href="#" className="block">
               <Image
-                src={img.src}
-                alt={img.alt}
+                src={product.image}
+                alt={product.image}
                 className="block object-cover h-auto rounded-md aspect-square lg:w-[190px] lg:h-[190px]"
                 width="146"
                 height="146"
@@ -96,10 +89,14 @@ export default function ProductSliderBasic() {
             </SfButton>
           </div>
           <div className="p-2 border-t border-neutral-200 typography-text-sm">
-            <SfLink href="#" variant="secondary" className="no-underline">
-              {name}
+            <SfLink
+              href="#"
+              variant="secondary"
+              className="no-underline line-clamp-1"
+            >
+              {product.title}
             </SfLink>
-            <span className="block mt-2 font-bold">{price}</span>
+            <span className="block mt-2 font-bold">$ {product.price}</span>
           </div>
         </div>
       ))}
