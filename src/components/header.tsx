@@ -6,9 +6,9 @@ import {
   SfInput,
   SfIconSearch,
   SfIconMenu,
-  SfIconExpandMore,
 } from "@storefront-ui/react";
 import { useGlobalContext } from "@/context/globalContext";
+import Link from "next/link";
 
 export default function Header() {
   const { cart } = useGlobalContext();
@@ -43,10 +43,10 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-center w-full py-2 px-4 lg:py-5 lg:px-6 bg-white border-b border-neutral-200">
-      <div className="flex flex-wrap lg:flex-nowrap items-center flex-row justify-start h-full max-w-[1536px] w-full">
-        <a
-          href="#"
+    <header className="flex justify-around w-full py-2 px-4 lg:py-5 lg:px-6 bg-white border-b border-neutral-200">
+      <div className="flex flex-wrap lg:flex-nowrap items-center flex-row justify-around h-full max-w-[1536px] w-full">
+        <Link
+          href="/"
           aria-label="SF Homepage"
           className="inline-block mr-4 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm shrink-0"
         >
@@ -61,7 +61,7 @@ export default function Header() {
               className="w-8 h-8 md:h-6 md:w-[176px] lg:w-[12.5rem] lg:h-[1.75rem]"
             />
           </picture>
-        </a>
+        </Link>
         <SfButton
           aria-label="Open categories"
           className="lg:hidden order-first lg:order-1 mr-4"
@@ -70,18 +70,10 @@ export default function Header() {
         >
           <SfIconMenu />
         </SfButton>
-        <SfButton
-          className="hidden lg:flex lg:mr-4"
-          variant="tertiary"
-          slotSuffix={<SfIconExpandMore className="hidden lg:block" />}
-        >
-          <span className="hidden lg:flex whitespace-nowrap">
-            Browse products
-          </span>
-        </SfButton>
+
         <form
           role="search"
-          className="flex flex-[100%] order-last lg:order-3 mt-2 lg:mt-0 pb-2 lg:pb-0"
+          className="flex w-[50%] order-last lg:order-3 mt-2 lg:mt-0 pb-2 lg:pb-0"
           onSubmit={search}
         >
           <SfInput
@@ -107,7 +99,7 @@ export default function Header() {
             onChange={(event) => setInputValue(event.target.value)}
           />
         </form>
-        <nav className="flex-1 flex justify-end lg:order-last lg:ml-4">
+        <nav className="flex justify-end lg:order-last lg:ml-4">
           <div className="flex flex-row flex-nowrap">
             {actionItems.map((actionItem) => (
               <SfButton
