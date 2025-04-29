@@ -1,6 +1,6 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import classNames from "classnames";
-import { Tab } from "@/types/interfaces/Tab";
+import { Tab } from "@/interfaces/Tab";
 
 function getPreviousIndex(current: number, elements: HTMLButtonElement[]) {
   for (let index = current - 1; index >= 0; index -= 1) {

@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { AxiosResponse } from "axios";
-import { Product } from "@/types/Product";
+import { Product } from "@/interfaces/Product";
 
 export async function getProducts(): Promise<Product[]> {
   const response: AxiosResponse<Product[]> = await api.get("/products");

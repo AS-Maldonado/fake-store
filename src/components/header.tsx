@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   SfButton,
   SfIconShoppingCart,
   SfIconFavorite,
-  SfIconPerson,
-  SfIconExpandMore,
   SfInput,
   SfIconSearch,
   SfIconMenu,
+  SfIconExpandMore,
 } from "@storefront-ui/react";
+import { useGlobalContext } from "@/context/globalContext";
 
 export default function Header() {
+  const { cart } = useGlobalContext();
+
   const [inputValue, setInputValue] = useState("");
+  const [totalCartQuantity, setCartTotalQuantity] = useState(0);
+
+  useEffect(() => {
+    const quantity = cart.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+
+    setCartTotalQuantity(quantity);
+  }, [cart, setCartTotalQuantity]);
 
   const actionItems = [
     {
@@ -26,12 +35,6 @@ export default function Header() {
       ariaLabel: "Wishlist",
       role: "button",
     },
-    {
-      label: "Log in",
-      icon: <SfIconPerson />,
-      ariaLabel: "Log in",
-      role: "login",
-    },
   ];
 
   const search = (event: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +43,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-center w-full py-2 px-4 lg:py-5 lg:px-6 text-white border-0 bg-primary-700">
+    <header className="flex justify-center w-full py-2 px-4 lg:py-5 lg:px-6 bg-white border-b border-neutral-200">
       <div className="flex flex-wrap lg:flex-nowrap items-center flex-row justify-start h-full max-w-[1536px] w-full">
         <a
           href="#"
@@ -49,11 +52,11 @@ export default function Header() {
         >
           <picture>
             <source
-              srcSet="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/vsf_logo_white.svg"
+              srcSet="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/vsf_logo.svg"
               media="(min-width: 768px)"
             />
             <img
-              src="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/vsf_logo_sign_white.svg"
+              src="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/vsf_logo_sign.svg"
               alt="Sf Logo"
               className="w-8 h-8 md:h-6 md:w-[176px] lg:w-[12.5rem] lg:h-[1.75rem]"
             />
@@ -61,15 +64,14 @@ export default function Header() {
         </a>
         <SfButton
           aria-label="Open categories"
-          className="lg:hidden order-first lg:order-1 mr-4 text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900"
+          className="lg:hidden order-first lg:order-1 mr-4"
           square
           variant="tertiary"
         >
           <SfIconMenu />
         </SfButton>
         <SfButton
-          className="hidden lg:flex lg:mr-4 text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900"
-          type="button"
+          className="hidden lg:flex lg:mr-4"
           variant="tertiary"
           slotSuffix={<SfIconExpandMore className="hidden lg:block" />}
         >
@@ -110,16 +112,16 @@ export default function Header() {
             {actionItems.map((actionItem) => (
               <SfButton
                 key={actionItem.ariaLabel}
-                className="mr-2 -ml-0.5 rounded-md text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900"
+                className="relative mr-2 -ml-0.5 rounded-md text-primary-700 hover:bg-primary-100 active:bg-primary-200 hover:text-primary-600 active:text-primary-700"
                 aria-label={actionItem.ariaLabel}
                 variant="tertiary"
                 square
                 slotPrefix={actionItem.icon}
               >
-                {actionItem.role === "login" && (
-                  <p className="hidden xl:inline-flex whitespace-nowrap">
-                    {actionItem.label}
-                  </p>
+                {actionItem.ariaLabel === "Cart" && (
+                  <span className="absolute top-0 right-[-5px] text-white rounded-full px-[5px] py-0 bg-[rgb(var(--colors-primary-700)/var(--tw-bg-opacity))] text-xs">
+                    {totalCartQuantity}
+                  </span>
                 )}
               </SfButton>
             ))}

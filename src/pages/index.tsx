@@ -1,5 +1,5 @@
 import { getProducts } from "@/api/fake-store-routes";
-import { Product } from "@/types/Product";
+import { Product } from "@/interfaces/Product";
 import ProductSliderBasic from "@/components/productSliderBasic";
 import { GetStaticProps } from "next";
 

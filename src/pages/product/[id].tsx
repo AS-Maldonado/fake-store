@@ -1,5 +1,5 @@
 import { getProductById, getRelatedProducts } from "@/api/fake-store-routes";
-import { Product } from "@/types/Product";
+import { Product } from "@/interfaces/Product";
 import {
   SfButton,
   SfIconArrowBack,
@@ -17,7 +17,8 @@ import { ParsedUrlQuery } from "querystring";
 import { useState } from "react";
 import ProductSliderBasic from "@/components/productSliderBasic";
 import ProductTabs from "@/components/productTabs";
-import { Tab } from "@/types/interfaces/Tab";
+import { Tab } from "@/interfaces/Tab";
+import { useGlobalContext } from "@/context/globalContext";
 
 interface ProductProps {
   product: Product | null;
@@ -33,6 +34,7 @@ export default function ProductPage({
   relatedProducts,
 }: ProductProps) {
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useGlobalContext();
 
   if (!product) {
     return (
@@ -114,6 +116,7 @@ export default function ProductPage({
               size="lg"
               className="flex-1"
               slotPrefix={<SfIconShoppingCart size="lg" />}
+              onClick={() => addToCart(product, quantity)}
             >
               Add to Cart
             </SfButton>

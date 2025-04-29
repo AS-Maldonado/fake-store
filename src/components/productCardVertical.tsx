@@ -1,4 +1,5 @@
-import { Product } from "@/types/Product";
+import { useGlobalContext } from "@/context/globalContext";
+import { Product } from "@/interfaces/Product";
 import {
   SfButton,
   SfRating,
@@ -14,6 +15,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCardVertical({ product }: ProductCardProps) {
+  const { addToCart } = useGlobalContext();
+
   return (
     <>
       <Link href={`/product/${product.id}`}>
@@ -51,7 +54,11 @@ export default function ProductCardVertical({ product }: ProductCardProps) {
       </Link>
 
       <div className="px-2 pt-2 pb-4 text-center">
-        <SfButton size="base" slotPrefix={<SfIconShoppingCart size="sm" />}>
+        <SfButton
+          size="base"
+          slotPrefix={<SfIconShoppingCart size="sm" />}
+          onClick={() => addToCart(product, 1)}
+        >
           Add to cart
         </SfButton>
       </div>
